@@ -10,6 +10,13 @@ services:
     volumes:
       - recipe_data:/app/data
 
+  # Fix the SQLite database path so recipes are saved in the
+  # Docker volume and remain available when containers are recreated.
+    command:
+      - sh
+      - -c
+      - "rm -f /app/recipes.db && ln -s /app/data/recipes.db /app/recipes.db && npm start"
+
   # Frontend service for the React application
   frontend:
     build: ./frontend
