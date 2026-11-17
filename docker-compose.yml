@@ -1,0 +1,25 @@
+
+version: '3.8'
+
+services:
+  # Backend service for the Recipe Sharing API
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - recipe_data:/app/data
+
+  # Frontend service for the React application
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:5000
+
+# Named volume to persist the SQLite database
+volumes:
+  recipe_data:
