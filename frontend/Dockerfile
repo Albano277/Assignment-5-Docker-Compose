@@ -11,8 +11,14 @@ COPY package*.json ./
 # Install the frontend dependencies.
 RUN npm install
 
+# Set the backend API URL during the build.
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Copy the remaining frontend application files.
 COPY . .
+
+
 
 # Build the production version of the React application.
 RUN npm run build
